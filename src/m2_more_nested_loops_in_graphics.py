@@ -4,8 +4,8 @@ in the context of TWO-DIMENSIONAL GRAPHICS.
 
 Authors: David Mutchler, Vibha Alangar, Matt Boutell, Dave Fisher,
          Mark Hays, Amanda Stouder, Aaron Wilkin, their colleagues,
-         and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         and Cleo Barmes.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import rosegraphics as rg
 
@@ -50,11 +50,45 @@ def draw_upside_down_wall(rectangle, n, window):
     and n is nonnegative.
     """
     # -------------------------------------------------------------------------
-    # TODO: 2. Implement and test this function.
+    # DONE: 2. Implement and test this function.
     #     Some tests are already written for you (above).
     # -------------------------------------------------------------------------
 
+    left_point = rectangle.get_upper_left_corner()
+    right_point = rectangle.get_lower_right_corner()
 
+    original_lx = left_point.x
+    original_ly = left_point.y
+    original_rx = right_point.x
+    original_ry = right_point.y
+
+    length = abs(original_rx - original_lx)
+    height = abs(original_ry - original_ly)
+
+    original_lx = original_lx - (n / 2 * length)
+    original_rx = original_rx - (n / 2 * length)
+
+    lx = original_lx
+    ly = original_ly
+    rx = original_rx
+    ry = original_ry
+
+    for k in range(n):
+        for j in range((n - k)):
+            lx = lx + (length / 2)
+            rx = rx + (length / 2)
+        for h in range(k + 1):
+            left = rg.Point(lx, ly)
+            right = rg.Point(rx, ry)
+            brick = rg.Rectangle(left, right)
+            brick.attach_to(window)
+            window.render()
+            lx = lx + length
+            rx = rx + length
+        ly = ly - height
+        ry = ry - height
+        lx = original_lx
+        rx = original_rx
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # -----------------------------------------------------------------------------
